@@ -1,14 +1,27 @@
 package com.lsr.estudospringjdbc.entities;
 
+import com.lsr.estudospringjdbc.DefaultSortProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("USER")
 public class User {
     @Id
+    @Column("ID")
     private Long id;
 
+    @Column("NOME")
+    @DefaultSortProperty
     private String nome;
+
+    @Column("NOME")
+    @DefaultSortProperty
+    private String nome2;
+
+    @Column("NOME")
+    @DefaultSortProperty
+    private String nome3;
 
     public Long getId() {
         return id;

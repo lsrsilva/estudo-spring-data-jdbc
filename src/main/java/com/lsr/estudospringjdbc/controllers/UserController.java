@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Iterable<User>> listAll() {
-        return ResponseEntity.ok(this.userRepository.findAll());
+        return ResponseEntity.ok(this.userRepository.search("a", 0, 2, "", ""));
     }
 
     @GetMapping("/{id}")

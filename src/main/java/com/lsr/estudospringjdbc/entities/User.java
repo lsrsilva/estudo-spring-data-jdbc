@@ -15,14 +15,6 @@ public class User {
     @DefaultSortProperty
     private String nome;
 
-    @Column("NOME")
-    @DefaultSortProperty
-    private String nome2;
-
-    @Column("NOME")
-    @DefaultSortProperty
-    private String nome3;
-
     public Long getId() {
         return id;
     }

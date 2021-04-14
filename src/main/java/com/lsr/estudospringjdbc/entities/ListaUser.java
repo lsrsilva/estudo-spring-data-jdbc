@@ -3,13 +3,10 @@ package com.lsr.estudospringjdbc.entities;
 import com.lsr.estudospringjdbc.DefaultSortProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.List;
-
-@Table("USER")
-public class User {
+@Table("LISTA_USERS")
+public class ListaUser {
     @Id
     @Column("ID")
     private Long id;
@@ -18,22 +15,22 @@ public class User {
     @DefaultSortProperty
     private String nome;
 
-    @MappedCollection(idColumn = "ID_USER", keyColumn = "ID")
-    private List<ListaUser> listaUserList;
+    @Column("ID_USER")
+    private User user;
 
-    public List<ListaUser> getListaUserList() {
-        return listaUserList;
+    public User getUser() {
+        return user;
     }
 
-    public void ListListaUserList(List<ListaUser> listaUserList) {
-        this.listaUserList = listaUserList;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void ListId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,7 +38,7 @@ public class User {
         return nome;
     }
 
-    public void ListNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 }

@@ -1,6 +1,7 @@
 package com.lsr.estudospringjdbc.repositories.filter;
 
 import com.lsr.estudospringjdbc.DefaultSortProperty;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -8,14 +9,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +45,7 @@ public class FilterRepositoryImpl<T> implements FilterRepository<T> {
         StringBuilder sb = new StringBuilder("SELECT * FROM ").append(getTableName(clazzType)).append(" WHERE");
         Field[] fields = clazzType.getDeclaredFields();
         for (Field field : fields) {
-            if (Collection.class.isAssignableFrom(field.getType()) || Map.class.isAssignableFrom(field.getType()) || Number.class.isAssignableFrom(field.getType())) {
+            if (Collection.class.isAssignableFrom(field.getType()) || Map.class.isAssignableFrom(field.getType()) || field.isAnnotationPresent(Id.class)) {
                 continue;
             }
             String columnName = getColumnName(field);
@@ -57,6 +55,7 @@ public class FilterRepositoryImpl<T> implements FilterRepository<T> {
         finalSql += " LIMIT " + page + ", " + size;
         System.out.println(finalSql);
         List<T> result = jdbcTemplate.query(finalSql, new BeanPropertyRowMapper<T>(clazzType));
+        List<Map<String, Object>> result2 = jdbcTemplate.query(finalSql, new ColumnMapRowMapper());
 
         return new PageImpl<>(result, pageRequest, 10);
     }
